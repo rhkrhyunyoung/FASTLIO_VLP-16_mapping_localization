@@ -10,13 +10,13 @@ Integrated Localization (ROS2): Ported and integrated the localization feature f
 
 # How to Run
 1. Mapping
-ros2 launch fast_lio mapping.launch.py config_file:=velodyne.yaml
+```bash ros2 launch fast_lio mapping.launch.py config_file:=velodyne.yaml
    <img width="1617" height="607" alt="img" src="https://github.com/user-attachments/assets/c800e2be-fe2c-49bc-b3f8-baf85aa3185b" />
-2. Save Map(map_file_path is in config/velodyne.yaml)
+3. Save Map(map_file_path is in config/velodyne.yaml)
 ros2 service call /map_save std_srvs/srv/Trigger {}
    <img width="416" height="285" alt="image" src="https://github.com/user-attachments/assets/d7cbc202-58b7-4ccb-a1d3-daa8f775e8a8" />
    <img width="405" height="285" alt="image" src="https://github.com/user-attachments/assets/4ad02e13-0f27-49f2-a5c3-edb079f2979b" />
-3. Localization
+4. Localization
 ros2 launch fast_lio localization.launch.py map:=/path/to/your/map_result/my_fast_lio_map.pcd
 <img width="472" height="460" alt="image" src="https://github.com/user-attachments/assets/a9c0bc14-c01a-42d6-b417-a379445d696f" />
 
