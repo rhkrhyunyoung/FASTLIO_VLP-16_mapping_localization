@@ -31,7 +31,8 @@ Integrated Localization (ROS2): Ported and integrated the localization feature f
     ├── FAST_LIO/
     ├── velodyne/
     ├── microstrain_inertial/
-    └── pcd2pgm/```
+    └── pcd2pgm/
+```
 
 # Configuration Files
 Mapping: FAST_LIO/config/velodyne.yaml
