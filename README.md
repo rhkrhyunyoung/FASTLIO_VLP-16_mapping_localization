@@ -36,12 +36,15 @@ Integrated Localization (ROS2): Ported and integrated the localization feature f
 
 # Configuration Files
 Mapping: FAST_LIO/config/velodyne.yaml
+
 Localization: FAST_LIO/config/velodyne_localization.yaml
 
 # TF
 ![frames_2026-03-13_15 42 59-1_page-0001](https://github.com/user-attachments/assets/1397234c-ee03-4b1b-88f7-780e7f8d0b98)
 Global Frame: odom
+
 Local/Body Frame: base_link
+
 For the odom → base_link → sensor_frame structure required by Nav2
 The tf structure is organized through localization.yaml modification.
 
