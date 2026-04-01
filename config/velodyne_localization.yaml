@@ -7,7 +7,7 @@
         feature_extract_enable: false
         point_filter_num: 3
         max_iteration: 20
-        filter_size_surf: 0.5
+        filter_size_surf: 0.2
         filter_size_map: 0.5
         cube_side_length: 1000.0
         runtime_pos_log_enable: false
@@ -18,7 +18,7 @@
             imu_topic:  "/imu/data"
             time_sync_en: true
             time_offset_lidar_to_imu: 0.0
-            world_frame: "odom"
+            world_frame: "map"
             body_frame: "base_link"
 
         preprocess:
@@ -29,8 +29,8 @@
             blind: 0.2
 
         mapping:
-            acc_cov: 0.1
-            gyr_cov: 0.1
+            acc_cov: 1.0
+            gyr_cov: 1.0
             b_acc_cov: 0.0001
             b_gyr_cov: 0.0001
             fov_degree:    360.0
