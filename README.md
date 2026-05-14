@@ -30,6 +30,7 @@ Integrated Localization (ROS2): Ported and integrated the localization feature f
 ```lidar_ws/
 └── src/
     ├── FAST_LIO/
+    ├── map/
     ├── velodyne/
     ├── microstrain_inertial/
     └── pcd2pgm/
