@@ -1,3 +1,4 @@
+[frames_2026-05-14_19.04.16.pdf](https://github.com/user-attachments/files/27755120/frames_2026-05-14_19.04.16.pdf)
 # FASTLIO_velodyne16_mapping-localization
 This repository is a modified version of hku-mars/FAST_LIO (ROS2)
 Optimized for broader LiDAR compatibility and localization capabilities.
@@ -40,13 +41,10 @@ Mapping: FAST_LIO/config/velodyne.yaml
 Localization: FAST_LIO/config/velodyne_localization.yaml
 
 # TF
-![frames_2026-03-13_15 42 59-1_page-0001](https://github.com/user-attachments/assets/1397234c-ee03-4b1b-88f7-780e7f8d0b98)
-Global Frame: odom
+[frames_2026-05-14_19.04.16.pdf](https://github.com/user-attachments/files/27755121/frames_2026-05-14_19.04.16.pdf)
 
-Local/Body Frame: base_link
-
-For the odom → base_link → sensor_frame structure required by Nav2
-The tf structure is organized through localization.yaml modification.
+For the map → base_link → sensor_frame structure required by Nav2
+The tf structure is organized through localization.yaml modification and laserMapping.cpp
 
 # pcd2pgm
   ros2 launch pcd2pgm pcd2pgm_launch.py
@@ -56,6 +54,7 @@ The tf structure is organized through localization.yaml modification.
   <img width="683" height="639" alt="image" src="https://github.com/user-attachments/assets/d65a8045-4e80-48d7-916f-6a95006cf193" />
   nav2+localizatioin
 <img width="602" height="613" alt="image" src="https://github.com/user-attachments/assets/28be2e0c-30d5-47df-9db9-96253747f7b5" />
+<img width="1920" height="1080" alt="스크린샷 2026-05-14 19-10-34" src="https://github.com/user-attachments/assets/97634a6a-3af0-4f15-898a-6171f7e8e262" />
 
 # cmd_vel topic
   ros2 topic echo /cmd_vel
