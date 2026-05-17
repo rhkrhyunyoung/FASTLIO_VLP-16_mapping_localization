@@ -42,10 +42,11 @@ Mapping: FAST_LIO/config/velodyne.yaml
 Localization: FAST_LIO/config/velodyne_localization.yaml
 
 # TF
-[frames_2026-05-14_19.04.16.pdf](https://github.com/user-attachments/files/27755121/frames_2026-05-14_19.04.16.pdf)
+[frames_2026-05-14_19.04.16.pdf](https://github.com/user-attachments/files/27897535/frames_2026-05-14_19.04.16.pdf)
 
 For the map → base_link → sensor_frame structure required by Nav2
 The tf structure is organized through localization.yaml modification and laserMapping.cpp
+Additional modification of yaml of nav2 required
 
 # pcd2pgm
   ros2 launch pcd2pgm pcd2pgm_launch.py
