@@ -9,6 +9,8 @@ Without needing the Livox-related environment.
 
 Integrated Localization (ROS2): Ported and integrated the localization feature from FAST_LIO_LOCALIZATION (ROS1) into the ROS2 environment.
 
+Modified the TF structure for interworking with nav2.
+
 # How to Run
 1. Mapping
 
