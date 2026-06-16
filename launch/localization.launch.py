@@ -68,6 +68,12 @@ def generate_launch_description():
         executable='static_transform_publisher',
         arguments=['0', '0', '0', '0', '0', '0', 'body', 'base_link']
     )
+    
+    static_tf_map_to_body_node = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        arguments=['0', '0', '0', '0', '0', '0', 'map', 'body']
+        )
 
     # RViz2 노드
     rviz_node = Node(
@@ -83,5 +89,6 @@ def generate_launch_description():
         rviz_node,
         robot_state_publisher_node,
         joint_state_publisher_node,
-        static_tf_node 
+        static_tf_node,
+        static_tf_map_to_body_node
     ])
