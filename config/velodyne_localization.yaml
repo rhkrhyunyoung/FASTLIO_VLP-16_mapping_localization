@@ -7,7 +7,7 @@
         feature_extract_enable: false
         point_filter_num: 3
         max_iteration: 20
-        filter_size_surf: 0.2
+        filter_size_surf: 0.4
         filter_size_map: 0.5
         cube_side_length: 1000.0
         runtime_pos_log_enable: false
@@ -19,6 +19,7 @@
             time_sync_en: true
             time_offset_lidar_to_imu: 0.0
             world_frame: "map"
+            dom_frame: "odom"
             body_frame: "base_link"
 
         preprocess:

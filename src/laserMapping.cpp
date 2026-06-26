@@ -87,6 +87,9 @@ condition_variable sig_buffer;
 
 string root_dir = ROOT_DIR;
 string map_file_path, lid_topic, imu_topic;
+string map_frame_id = "map";             
+string odom_frame_id = "odom";              
+string base_frame_id = "base_link";
 
 double res_mean_last = 0.05, total_residual = 0.0;
 double last_timestamp_lidar = 0, last_timestamp_imu = -1.0;
@@ -101,6 +104,11 @@ bool   scan_pub_en = false, dense_pub_en = false, scan_body_pub_en = false;
 bool    is_first_lidar = true;
 bool localization_mode = false;
 std::string pcd_path = "";
+
+Eigen::Affine3d map_to_odom = Eigen::Affine3d::Identity();
+std::string map_frame = "map";
+std::string odom_frame = "odom";
+std::string base_frame = "base_link";
 
 
 vector<vector<int>>  pointSearchInd_surf; 
@@ -635,11 +643,14 @@ void set_posestamp(T & out)
 
 void publish_odometry(const rclcpp::Publisher<nav_msgs::msg::Odometry>::SharedPtr pubOdomAftMapped, std::unique_ptr<tf2_ros::TransformBroadcaster> & tf_br)
 {
-    odomAftMapped.header.frame_id = "map";
-    odomAftMapped.child_frame_id = "base_link";
+    // 1. Odometry 메시지 설정
+    odomAftMapped.header.frame_id = map_frame_id;
+    odomAftMapped.child_frame_id = base_frame_id;
     odomAftMapped.header.stamp = get_ros_time(lidar_end_time);
     set_posestamp(odomAftMapped.pose);
     pubOdomAftMapped->publish(odomAftMapped);
+
+    // 공분산 설정 (기존 코드 유지)
     auto P = kf.get_P();
     for (int i = 0; i < 6; i ++)
     {
@@ -652,18 +663,33 @@ void publish_odometry(const rclcpp::Publisher<nav_msgs::msg::Odometry>::SharedPt
         odomAftMapped.pose.covariance[i*6 + 5] = P(k, 2);
     }
 
-    geometry_msgs::msg::TransformStamped trans;
-    trans.header.frame_id = "map";
-    trans.child_frame_id = "base_link";
-    trans.header.stamp = get_ros_time(lidar_end_time);
-    trans.transform.translation.x = odomAftMapped.pose.pose.position.x;
-    trans.transform.translation.y = odomAftMapped.pose.pose.position.y;
-    trans.transform.translation.z = odomAftMapped.pose.pose.position.z;
-    trans.transform.rotation.w = odomAftMapped.pose.pose.orientation.w;
-    trans.transform.rotation.x = odomAftMapped.pose.pose.orientation.x;
-    trans.transform.rotation.y = odomAftMapped.pose.pose.orientation.y;
-    trans.transform.rotation.z = odomAftMapped.pose.pose.orientation.z;
-    tf_br->sendTransform(trans);
+    // 2. TF 발행: map -> odom
+    geometry_msgs::msg::TransformStamped map_to_odom;
+    map_to_odom.header.stamp = get_ros_time(lidar_end_time);
+    map_to_odom.header.frame_id = map_frame_id;
+    map_to_odom.child_frame_id = odom_frame_id;
+    map_to_odom.transform.translation.x = 0.0;
+    map_to_odom.transform.translation.y = 0.0;
+    map_to_odom.transform.translation.z = 0.0;
+    map_to_odom.transform.rotation.w = 1.0;
+    map_to_odom.transform.rotation.x = 0.0;
+    map_to_odom.transform.rotation.y = 0.0;
+    map_to_odom.transform.rotation.z = 0.0;
+    tf_br->sendTransform(map_to_odom);
+
+    // 3. TF 발행: odom -> base_link
+    geometry_msgs::msg::TransformStamped odom_to_base;
+    odom_to_base.header.stamp = get_ros_time(lidar_end_time);
+    odom_to_base.header.frame_id = odom_frame_id;
+    odom_to_base.child_frame_id = base_frame_id;
+    odom_to_base.transform.translation.x = odomAftMapped.pose.pose.position.x;
+    odom_to_base.transform.translation.y = odomAftMapped.pose.pose.position.y;
+    odom_to_base.transform.translation.z = odomAftMapped.pose.pose.position.z;
+    odom_to_base.transform.rotation.w = odomAftMapped.pose.pose.orientation.w;
+    odom_to_base.transform.rotation.x = odomAftMapped.pose.pose.orientation.x;
+    odom_to_base.transform.rotation.y = odomAftMapped.pose.pose.orientation.y;
+    odom_to_base.transform.rotation.z = odomAftMapped.pose.pose.orientation.z;
+    tf_br->sendTransform(odom_to_base);
 }
 
 void publish_path(rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr pubPath)
@@ -842,7 +868,6 @@ public:
         this->declare_parameter<int>("pcd_save.interval", -1);
         this->declare_parameter<vector<double>>("mapping.extrinsic_T", vector<double>());
         this->declare_parameter<vector<double>>("mapping.extrinsic_R", vector<double>());
-
         this->get_parameter_or<bool>("publish.path_en", path_en, true);
         this->get_parameter_or<bool>("publish.effect_map_en", effect_pub_en, false);
         this->get_parameter_or<bool>("publish.map_en", map_pub_en, false);
@@ -878,6 +903,9 @@ public:
         this->get_parameter_or<int>("pcd_save.interval", pcd_save_interval, -1);
         this->get_parameter_or<vector<double>>("mapping.extrinsic_T", extrinT, vector<double>());
         this->get_parameter_or<vector<double>>("mapping.extrinsic_R", extrinR, vector<double>());
+        this->get_parameter_or<string>("common.world_frame", map_frame_id, "map");
+        this->get_parameter_or<string>("common.odom_frame", odom_frame_id, "odom");
+        this->get_parameter_or<string>("common.body_frame", base_frame_id, "base_link");
         this->declare_parameter<bool>("localization_mode", false);
         this->declare_parameter<std::string>("pcd_path", "");
         this->get_parameter("localization_mode", localization_mode);
@@ -1219,6 +1247,9 @@ private:
 
     // 6. 터미널에 확실히 로그 찍기
     RCLCPP_INFO(this->get_logger(), "===> Initial Pose RESET SUCCESS! [x: %.2f, y: %.2f, z: %.2f]",x_state.pos(0), x_state.pos(1), x_state.pos(2));
+    
+    flg_EKF_inited = false;
+    first_lidar_time = 0;
     }
     
 
