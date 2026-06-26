@@ -1,49 +1,47 @@
 [frames_2026-05-14_19.04.16.pdf](https://github.com/user-attachments/files/27755120/frames_2026-05-14_19.04.16.pdf)
 # FASTLIO_velodyne16_mapping+localization
-This repository is a modified version of hku-mars/FAST_LIO (ROS2)
-Optimized for broader LiDAR compatibility and localization capabilities.
+This repository presents a robust, ROS2-native solution for LiDAR-based Simultaneous Localization and Mapping (SLAM) and Localization, primarily leveraging the enhanced FAST-LIO algorithm. It is a significant modification and extension of the original hku-mars/FAST_LIO (ROS2) project, with key optimizations for broader LiDAR compatibility and seamless integration with ROS2 Navigation2 (Nav2).
 
-Removed Livox SDK Dependency: Original FAST_LIO requires Livox drivers even when using Velodyne LiDARs.
-This version has been modified to build and run seamlessly using Velodyne drivers only
-Without needing the Livox-related environment.
+The core objective was to transition a powerful LiDAR odometry and mapping system into a production-ready localization module capable of operating within a pre-built map, while maintaining full compatibility with the Nav2 stack for autonomous navigation.
 
-Integrated Localization (ROS2): Ported and integrated the localization feature from FAST_LIO_LOCALIZATION (ROS1) into the ROS2 environment.
+# KeyFeatures, Enhancemaents
+1. Velodyne-Native FAST-LIO Integration (ROS2):
 
-Modified the TF structure for interworking with nav2.
+- Dependency Removal: The original FAST_LIO imposed a dependency on Livox SDK, even when utilizing Velodyne LiDARs. This version has been meticulously modified to build and run flawlessly with Velodyne drivers exclusively, eliminating the need for any Livox-specific environment.
 
-# How to Run
-1. Mapping
+- Enhanced Compatibility: Optimized to process standard sensor_msgs/msg/PointCloud2 from Velodyne LiDARs, ensuring broader hardware compatibility.
 
-``` ros2 launch fast_lio mapping.launch.py config_file:=velodyne.yaml```
-   <img width="1617" height="607" alt="img" src="https://github.com/user-attachments/assets/c800e2be-fe2c-49bc-b3f8-baf85aa3185b" />
-2. Save Map(map_file_path is in config/velodyne.yaml)
+2. Integrated Localization Capability (ROS2):
 
-``` ros2 service call /map_save std_srvs/srv/Trigger {}```
-   <img width="416" height="285" alt="image" src="https://github.com/user-attachments/assets/d7cbc202-58b7-4ccb-a1d3-daa8f775e8a8" />
-   <img width="405" height="285" alt="image" src="https://github.com/user-attachments/assets/4ad02e13-0f27-49f2-a5c3-edb079f2979b" />
+- Porting from ROS1: The localization feature, originally found in the ROS1-based FAST_LIO_LOCALIZATION, has been successfully ported and deeply integrated into the ROS2 FAST-LIO framework.
 
-3. Localization
+- Map Loading & Relocalization: Enables the system to load a pre-existing PCD map and perform accurate relocalization within that map.
 
-``` ros2 launch fast_lio localization.launch.py map:=/path/to/your/map_result/my_fast_lio_map.pcd```
+- Dynamic TF Adjustment: Implemented robust logic for initial pose estimation via /initialpose (from RViz2) to align the robot's starting position with the loaded map.
 
-<img width="472" height="460" alt="image" src="https://github.com/user-attachments/assets/a9c0bc14-c01a-42d6-b417-a379445d696f" />
+3. ROS2 Navigation2 (Nav2) Full Stack Integration:
 
-# Workspace Structure
-```lidar_ws/
-└── src/
-    ├── FAST_LIO/
-    ├── map/
-    ├── velodyne/
-    ├── microstrain_inertial/
-    └── pcd2pgm/
-```
+- Standardized TF Structure: Crucially, the TF (Transform) tree has been re-architected to conform to the standard map -> odom -> base_link -> sensor_frame hierarchy required by Nav2. This was achieved through significant modifications in laserMapping.cpp and configuration adjustments.
 
-# Configuration Files
-Mapping: FAST_LIO/config/velodyne.yaml
+- AMCL Replacement: FAST-LIO now directly provides high-precision localization, effectively replacing AMCL in the Nav2 stack.
 
-Localization: FAST_LIO/config/velodyne_localization.yaml
+- Optimized Costmap Configuration: nav2_params.yaml has been fine-tuned to properly utilize PointCloud2 data from Velodyne LiDARs for local and global costmaps, including aggressive filtering for ground noise and dynamic obstacle avoidance.
 
-# TF
+4. Gazebo Simulation Environment:
+
+- A custom Gazebo world and a tracked vehicle URDF model (DROK_CK) are provided, allowing for realistic simulation and testing of the SLAM and Localization functionalities.
+
+- Physics Tuning: Extensive work on drok_gazebo.urdf to optimize track friction (mu) and joint limits (max_angular_speed, max_linear_speed), mitigating simulation instabilities like robot shaking and drifting.
+
+# System Architecture
+The project's architecture seamlessly integrates LiDAR odometry and mapping with the ROS2 Navigation2 stack, built on a robust TF foundation.
+
+TF Tree Hierarchy:
+map (Global Reference, provided by FAST-LIO's map)
+odom (Odometry Frame, provided by FAST-LIO's continuous motion estimation)
+base_link (Robot Base, physical center of the robot)
+vlp16_link (LiDAR Sensor)
+imu_link (IMU Sensor)
 <img width="1713" height="839" alt="image" src="https://github.com/user-attachments/assets/0d43f69c-540c-4632-9873-6ce9437df0af" />
 
 [frames_2026-06-26_22.04.57.pdf](https://github.com/user-attachments/files/29385686/frames_2026-06-26_22.04.57.pdf)
@@ -52,21 +50,61 @@ For the map → base_link → sensor_frame structure required by Nav2
 The tf structure is organized through localization.yaml modification and laserMapping.cpp
 Additional modification of yaml of nav2 required
 
-# pcd2pgm
+# Workspace Structure
 ```
-ros2 launch pcd2pgm pcd2pgm_launch.py
+your_ros2_workspace/
+└── src/
+    ├── fast_lio/              # Modified FAST-LIO package
+    ├── drok_gazebo/           # Custom Gazebo robot model and world
+    ├── map/                   # (Optional) Directory for generated maps
+    ├── velodyne/              # (Optional) Velodyne ROS2 drivers
+    ├── microstrain_inertial/  # (Optional) IMU drivers
+    └── pcd2pgm/               # Utility to convert PCD maps to PGM for Nav2
 ```
-  <img width="833" height="586" alt="image" src="https://github.com/user-attachments/assets/e180e249-a60c-4c7d-b30e-176c1269b154" />
 
-# Nav2
-  <img width="683" height="639" alt="image" src="https://github.com/user-attachments/assets/d65a8045-4e80-48d7-916f-6a95006cf193" />
+# How to Run
+1. Mapping
+
+``` ros2 launch fast_lio mapping.launch.py config_file:=velodyne.yaml```
+   <img width="1617" height="607" alt="img" src="https://github.com/user-attachments/assets/c800e2be-fe2c-49bc-b3f8-baf85aa3185b" />
+   
+2. Save Map(map_file_path is in config/velodyne.yaml)
+
+``` ros2 service call /map_save std_srvs/srv/Trigger {}```
+   <img width="416" height="285" alt="image" src="https://github.com/user-attachments/assets/d7cbc202-58b7-4ccb-a1d3-daa8f775e8a8" />
+   <img width="405" height="285" alt="image" src="https://github.com/user-attachments/assets/4ad02e13-0f27-49f2-a5c3-edb079f2979b" />
+
+3. Localization
+
+``` ros2 launch fast_lio localization.launch.py map:=/path/to/your/map_result/my_fast_lio_map.pcd use_sim_time:=true```
+
+<img width="472" height="460" alt="image" src="https://github.com/user-attachments/assets/a9c0bc14-c01a-42d6-b417-a379445d696f" />
+
+4. Nav2 Stack Integration
+``` ros2 launch nav2_bringup navigation_launch.py \
+    use_sim_time:=true \
+    autostart:=true \
+    amcl:=false \
+    map:=/path/to/your/2d_map.yaml \
+    params_file:=/path/to/my_nav2_params.yaml```
+
+<img width="683" height="639" alt="image" src="https://github.com/user-attachments/assets/d65a8045-4e80-48d7-916f-6a95006cf193" />
   nav2+localizatioin
 <img width="602" height="613" alt="image" src="https://github.com/user-attachments/assets/28be2e0c-30d5-47df-9db9-96253747f7b5" />
 <img width="1920" height="1080" alt="스크린샷 2026-05-14 19-10-34" src="https://github.com/user-attachments/assets/97634a6a-3af0-4f15-898a-6171f7e8e262" />
 
-# Gazebo
+# Configuration Files
+Mapping: fast_lio/config/velodyne.yaml
+
+Localization: fast_lio/config/velodyne_localization.yaml
+
+Nav2 Parameters: /path/to/my_nav2_params.yaml (customized for FAST-LIO integration)
+
+Gazebo Robot URDF: drok_gazebo/urdf/drok_gazebo_copy.urdf (or similar name)
+
 <img width="1280" height="720" alt="img1 daumcdn" src="https://github.com/user-attachments/assets/36f29c00-3de7-4ca8-95cc-bb9a26093a02" />
 
+  <img width="833" height="586" alt="image" src="https://github.com/user-attachments/assets/e180e249-a60c-4c7d-b30e-176c1269b154" />
 
 # topics
 ```
