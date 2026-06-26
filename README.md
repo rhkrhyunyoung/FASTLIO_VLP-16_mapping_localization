@@ -86,7 +86,8 @@ your_ros2_workspace/
     autostart:=true \
     amcl:=false \
     map:=/path/to/your/2d_map.yaml \
-    params_file:=/path/to/my_nav2_params.yaml```
+    params_file:=/path/to/my_nav2_params.yaml
+```
 
 <img width="683" height="639" alt="image" src="https://github.com/user-attachments/assets/d65a8045-4e80-48d7-916f-6a95006cf193" />
   nav2+localizatioin
