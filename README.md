@@ -45,6 +45,7 @@ Localization: FAST_LIO/config/velodyne_localization.yaml
 
 # TF
 <img width="1589" height="913" alt="스크린샷 2026-05-17 18-28-49" src="https://github.com/user-attachments/assets/33b90072-76f1-4736-8d99-7cc9faa96695" />
+[frames_2026-06-26_22.04.57.pdf](https://github.com/user-attachments/files/29385686/frames_2026-06-26_22.04.57.pdf)
 
 For the map → base_link → sensor_frame structure required by Nav2
 The tf structure is organized through localization.yaml modification and laserMapping.cpp
@@ -61,6 +62,10 @@ ros2 launch pcd2pgm pcd2pgm_launch.py
   nav2+localizatioin
 <img width="602" height="613" alt="image" src="https://github.com/user-attachments/assets/28be2e0c-30d5-47df-9db9-96253747f7b5" />
 <img width="1920" height="1080" alt="스크린샷 2026-05-14 19-10-34" src="https://github.com/user-attachments/assets/97634a6a-3af0-4f15-898a-6171f7e8e262" />
+
+# Gazebo
+<img width="1280" height="720" alt="img1 daumcdn" src="https://github.com/user-attachments/assets/36f29c00-3de7-4ca8-95cc-bb9a26093a02" />
+
 
 # cmd_vel topic
 ```
