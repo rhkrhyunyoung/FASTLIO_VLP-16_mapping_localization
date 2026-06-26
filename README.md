@@ -68,7 +68,10 @@ ros2 launch pcd2pgm pcd2pgm_launch.py
 <img width="1280" height="720" alt="img1 daumcdn" src="https://github.com/user-attachments/assets/36f29c00-3de7-4ca8-95cc-bb9a26093a02" />
 
 
-# cmd_vel topic
+# topics
 ```
 ros2 topic echo /cmd_vel
-```  
+```
+```
+ros2 run tf2_ros tf2_echo map base_link
+```
