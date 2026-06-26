@@ -1,5 +1,5 @@
 [frames_2026-05-14_19.04.16.pdf](https://github.com/user-attachments/files/27755120/frames_2026-05-14_19.04.16.pdf)
-# FASTLIO_velodyne16_mapping-localization
+# FASTLIO_velodyne16_mapping+localization
 This repository is a modified version of hku-mars/FAST_LIO (ROS2)
 Optimized for broader LiDAR compatibility and localization capabilities.
 
@@ -44,7 +44,10 @@ Mapping: FAST_LIO/config/velodyne.yaml
 Localization: FAST_LIO/config/velodyne_localization.yaml
 
 # TF
+
 <img width="1589" height="913" alt="스크린샷 2026-05-17 18-28-49" src="https://github.com/user-attachments/assets/33b90072-76f1-4736-8d99-7cc9faa96695" />
+<img width="1713" height="839" alt="image" src="https://github.com/user-attachments/assets/0d43f69c-540c-4632-9873-6ce9437df0af" />
+
 [frames_2026-06-26_22.04.57.pdf](https://github.com/user-attachments/files/29385686/frames_2026-06-26_22.04.57.pdf)
 
 For the map → base_link → sensor_frame structure required by Nav2
