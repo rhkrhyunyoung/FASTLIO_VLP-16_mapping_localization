@@ -105,8 +105,6 @@ Gazebo Robot URDF: drok_gazebo/urdf/drok_gazebo_copy.urdf (or similar name)
 
 <img width="1280" height="720" alt="img1 daumcdn" src="https://github.com/user-attachments/assets/36f29c00-3de7-4ca8-95cc-bb9a26093a02" />
 
-  <img width="833" height="586" alt="image" src="https://github.com/user-attachments/assets/e180e249-a60c-4c7d-b30e-176c1269b154" />
-
 # topics
 ```
 ros2 topic echo /cmd_vel
