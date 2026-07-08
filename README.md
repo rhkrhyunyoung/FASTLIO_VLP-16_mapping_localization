@@ -1,5 +1,4 @@
 
-[frames_2026-07-08_16.30.16.pdf](https://github.com/user-attachments/files/29789604/frames_2026-07-08_16.30.16.pdf)
 
 # FASTLIO_velodyne16_mapping+localization
 This repository presents a robust, ROS2-native solution for LiDAR-based Simultaneous Localization and Mapping (SLAM) and Localization, primarily leveraging the enhanced FAST-LIO algorithm. It is a significant modification and extension of the original hku-mars/FAST_LIO (ROS2) project, with key optimizations for broader LiDAR compatibility and seamless integration with ROS2 Navigation2 (Nav2).
