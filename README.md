@@ -1,4 +1,6 @@
-[frames_2026-05-14_19.04.16.pdf](https://github.com/user-attachments/files/27755120/frames_2026-05-14_19.04.16.pdf)
+
+[frames_2026-07-08_16.30.16.pdf](https://github.com/user-attachments/files/29789604/frames_2026-07-08_16.30.16.pdf)
+
 # FASTLIO_velodyne16_mapping+localization
 This repository presents a robust, ROS2-native solution for LiDAR-based Simultaneous Localization and Mapping (SLAM) and Localization, primarily leveraging the enhanced FAST-LIO algorithm. It is a significant modification and extension of the original hku-mars/FAST_LIO (ROS2) project, with key optimizations for broader LiDAR compatibility and seamless integration with ROS2 Navigation2 (Nav2).
 
@@ -42,7 +44,7 @@ odom (Odometry Frame, provided by FAST-LIO's continuous motion estimation)
 base_link (Robot Base, physical center of the robot)
 vlp16_link (LiDAR Sensor)
 imu_link (IMU Sensor)
-<img width="1713" height="839" alt="image" src="https://github.com/user-attachments/assets/0d43f69c-540c-4632-9873-6ce9437df0af" />
+<img width="1580" height="690" alt="image" src="https://github.com/user-attachments/assets/dbaa7b4f-2887-4126-8910-07d42acf8056" />
 
 [frames_2026-06-26_22.04.57.pdf](https://github.com/user-attachments/files/29385686/frames_2026-06-26_22.04.57.pdf)
 
