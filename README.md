@@ -35,22 +35,33 @@ The core objective was to transition a powerful LiDAR odometry and mapping syste
 
 - Physics Tuning: Extensive work on drok_gazebo.urdf to optimize track friction (mu) and joint limits (max_angular_speed, max_linear_speed), mitigating simulation instabilities like robot shaking and drifting.
 
-# System Architecture
-The project's architecture seamlessly integrates LiDAR odometry and mapping with the ROS2 Navigation2 stack, built on a robust TF foundation.
+# System Architecture & TF Hierarchy
+This project implements aNav2-compatible TF tree structureby integrating FAST-LIO's global localization with the robot's local odometry. To prevent the "Multiple Parents" issue in the TF tree, anInverse Transform Calculationlogic was implemented inlaserMapping.cpp.
 
 TF Tree Hierarchy:
-map (Global Reference, provided by FAST-LIO's map)
-odom (Odometry Frame, provided by FAST-LIO's continuous motion estimation)
-base_link (Robot Base, physical center of the robot)
-vlp16_link (LiDAR Sensor)
-imu_link (IMU Sensor)
+- map(Global Frame): Drift-free global reference provided by FAST-LIO.
+- odom(Odometry Frame): Smooth, continuous local reference provided by wheel encoders/IMU.
+- base_link(Robot Base): The physical center of the robot.
+- sensors(vlp16_link,imu_link, etc.): Attached tobase_linkvia static transforms.
 <img width="1580" height="690" alt="image" src="https://github.com/user-attachments/assets/dbaa7b4f-2887-4126-8910-07d42acf8056" />
 
 [frames_2026-06-26_22.04.57.pdf](https://github.com/user-attachments/files/29385686/frames_2026-06-26_22.04.57.pdf)
 
-For the map → base_link → sensor_frame structure required by Nav2
-The tf structure is organized through localization.yaml modification and laserMapping.cpp
-Additional modification of yaml of nav2 required
+Transformation Logic (Inverse Calculation)
+Unlike standard mapping nodes that directly publishodom→base_link, this implementation follows theAMCL-style localization approach:
+- Input: FAST-LIO calculates the high-accuracy pose ofmap→base_link.
+- Input: The robot's internal system (Wheels/IMU) providesodom→base_link.
+- Output: The node calculates and publishes themap→odomtransform using the following inverse logic:
+```
+T_map_odom = T_map_base * T_odom_base^-1
+```
+- Benefit: This ensures a single parent forbase_linkwhile allowing Nav2's local planners to use smooth odometry and global planners to use accurate map-based localization.
+
+Nav2 Integration Requirements
+- Localization Mode: Enabled vialocalization.yamlto use a pre-built PCD map.
+- Global Frame: Set tomapin Nav2 params.
+- Robot Base Frame: Set tobase_link.
+- Odometry Topic: typically/Odometry(published by FAST-LIO, referenced to themapframe for stability).
 
 # Workspace Structure
 ```
