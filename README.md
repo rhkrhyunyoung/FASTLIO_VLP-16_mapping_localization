@@ -1,4 +1,4 @@
-# 🚀 FAST-LIO-Nav2: Seamless Mapping & Localization for ROS2
+#  FAST-LIO-Nav2: Seamless Mapping & Localization for ROS2
 
 [![ROS2 Humble](https://img.shields.io/badge/ROS2-Humble-blue.svg)](https://docs.ros.org/en/humble/index.html)
 [![License: BSD 3-Clause](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
@@ -7,7 +7,7 @@ This repository provides a robust, **ROS2-native solution** for LiDAR-based SLAM
 
 ---
 
-## ✨ Key Enhancements
+##  Key Enhancements
 
 ### 1. Velodyne-Native Integration
 *   **Dependency-Free Build**: Eliminated the mandatory Livox SDK dependency. This version builds flawlessly in environments using only Velodyne drivers.
@@ -25,7 +25,7 @@ This repository provides a robust, **ROS2-native solution** for LiDAR-based SLAM
 
 ---
 
-## 🏗 System Architecture & TF Hierarchy
+##  System Architecture & TF Hierarchy
 
 This project uses an **AMCL-style inverse calculation** to maintain a seamless TF tree. To prevent "Multiple Parents" conflicts, the node calculates the `map -> odom` transform dynamically.
 
@@ -44,7 +44,7 @@ $$T_{map \to odom} = T_{map \to base\_link} \times (T_{odom \to base\_link})^{-1
 
 ---
 
-## 📂 Workspace Structure
+##  Workspace Structure
 ```bash
 your_ros2_workspace/
 └── src/
@@ -54,7 +54,7 @@ your_ros2_workspace/
     ├── velodyne/              # Velodyne ROS2 drivers
     └── pcd2pgm/               # PCD to PGM converter for Nav2
 ```
-## 🚀 How to Run
+##  How to Run
 
 ### 1. Mapping (SLAM)
 Generate a point cloud map of your environment.
@@ -90,7 +90,7 @@ Launch the full Navigation2 stack using FAST-LIO as the localization source.
 <img width="602" height="613" alt="image" src="https://github.com/user-attachments/assets/28be2e0c-30d5-47df-9db9-96253747f7b5" />
 <img width="1920" height="1080" alt="스크린샷 2026-05-14 19-10-34" src="https://github.com/user-attachments/assets/97634a6a-3af0-4f15-898a-6171f7e8e262" />
 
-## 🛠 Configuration
+##  Configuration
 *   Mapping: fast_lio/config/velodyne.yaml
 
 *   Localization: fast_lio/config/velodyne_localization.yaml
@@ -101,7 +101,7 @@ Launch the full Navigation2 stack using FAST-LIO as the localization source.
 
 <img width="1280" height="720" alt="img1 daumcdn" src="https://github.com/user-attachments/assets/36f29c00-3de7-4ca8-95cc-bb9a26093a02" />
 
-## 📊 Debugging & Topics
+##  Debugging & Topics
 *   Monitor Velocity: ros2 topic echo /cmd_vel
 *   Check TF Drift: ros2 run tf2_ros tf2_echo map base_link
 *   Visualize Tree: ros2 run tf2_tools view_frames
