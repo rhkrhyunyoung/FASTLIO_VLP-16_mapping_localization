@@ -85,10 +85,8 @@ Launch the full Navigation2 stack using FAST-LIO as the localization source.
     params_file:=/path/to/my_nav2_params.yaml
 ```
 
-<img width="683" height="639" alt="image" src="https://github.com/user-attachments/assets/d65a8045-4e80-48d7-916f-6a95006cf193" />
-  nav2+localizatioin
-<img width="602" height="613" alt="image" src="https://github.com/user-attachments/assets/28be2e0c-30d5-47df-9db9-96253747f7b5" />
-<img width="1920" height="1080" alt="스크린샷 2026-05-14 19-10-34" src="https://github.com/user-attachments/assets/97634a6a-3af0-4f15-898a-6171f7e8e262" />
+<img width="400" height="400" alt="image" src="https://github.com/user-attachments/assets/d65a8045-4e80-48d7-916f-6a95006cf193" />
+<img width="500" height="300" alt="스크린샷 2026-05-14 19-10-34" src="https://github.com/user-attachments/assets/97634a6a-3af0-4f15-898a-6171f7e8e262" />
 
 ##  Configuration
 *   Mapping: fast_lio/config/velodyne.yaml
