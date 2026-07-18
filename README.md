@@ -60,6 +60,9 @@ your_ros2_workspace/
 Generate a point cloud map of your environment.
 
 ``` ros2 launch fast_lio mapping.launch.py config_file:=velodyne.yaml```
+
+https://github.com/user-attachments/assets/37fe88da-bcde-46a3-9a15-cc479d6cf232
+
    <img width="1617" height="607" alt="img" src="https://github.com/user-attachments/assets/c800e2be-fe2c-49bc-b3f8-baf85aa3185b" />
    
 ### 2. Save Map
@@ -70,7 +73,8 @@ After mapping, save the result to a .pcd file.
 ### 3. Localization
 Run the system using a pre-built map for autonomous navigation.
 
-``` ros2 launch fast_lio localization.launch.py map:=/path/to/your/map_result/my_fast_lio_map.pcd use_sim_time:=true```
+``` ros2 launch fast_lio localization.launch.py map:=/path/to/your/map_result/my_fast_lio_map.pcd use_sim_time:=true
+```
 
 https://github.com/user-attachments/assets/b1537e11-0d6c-43e7-bd98-64d6127a4e74
 
