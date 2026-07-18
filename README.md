@@ -35,6 +35,9 @@ This project uses an **AMCL-style inverse calculation** to maintain a seamless T
 - **`base_link`**: Robot physical center.
 - **`sensors`**: Static transforms (LiDAR, IMU, etc.) attached to `base_link`.
 
+<img width="500" height="300" alt="스크린샷 2026-07-14 17-08-03" src="https://github.com/user-attachments/assets/14d908e1-e0c4-4b9f-8ad7-f186978a264f" />
+
+
 ### Transformation Logic (Inverse Calculation)
 The node calculates the **map → odom** transform using the following logic to bridge the gap between high-frequency local odometry and high-precision global localization:
 
