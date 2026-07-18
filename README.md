@@ -65,8 +65,7 @@ Generate a point cloud map of your environment.
 ### 2. Save Map
 After mapping, save the result to a .pcd file.
 ``` ros2 service call /map_save std_srvs/srv/Trigger {}```
-   <img width="416" height="285" alt="image" src="https://github.com/user-attachments/assets/d7cbc202-58b7-4ccb-a1d3-daa8f775e8a8" />
-   <img width="405" height="285" alt="image" src="https://github.com/user-attachments/assets/4ad02e13-0f27-49f2-a5c3-edb079f2979b" />
+   <img width="300" height="200" alt="image" src="https://github.com/user-attachments/assets/d7cbc202-58b7-4ccb-a1d3-daa8f775e8a8" /><img width="300" height="200" alt="image" src="https://github.com/user-attachments/assets/4ad02e13-0f27-49f2-a5c3-edb079f2979b" />
 
 ### 3. Localization
 Run the system using a pre-built map for autonomous navigation.
