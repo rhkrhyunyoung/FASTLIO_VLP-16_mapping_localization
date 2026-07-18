@@ -72,7 +72,7 @@ Run the system using a pre-built map for autonomous navigation.
 
 ``` ros2 launch fast_lio localization.launch.py map:=/path/to/your/map_result/my_fast_lio_map.pcd use_sim_time:=true```
 
-<img width="472" height="460" alt="image" src="https://github.com/user-attachments/assets/a9c0bc14-c01a-42d6-b417-a379445d696f" />
+https://github.com/user-attachments/assets/b1537e11-0d6c-43e7-bd98-64d6127a4e74
 
 ### 4. Nav2 Stack Integration
 Launch the full Navigation2 stack using FAST-LIO as the localization source.
